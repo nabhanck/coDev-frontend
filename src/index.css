@@ -3,6 +3,12 @@
 @import "shadcn/tailwind.css";
 @import "@fontsource-variable/geist";
 
+:root {
+  font-family: "Be Vietnam Pro", sans-serif;
+}
+
+/* purple: #724AE0 */
+
 /* @custom-variant dark (&:is(.dark *));
 
 :root {
