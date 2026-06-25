@@ -3,7 +3,7 @@ import { Goal } from "lucide-react";
 export const DailyFocus = () => {
   return (
     <>
-      <div className="border border-gray-200 p-4 rounded-md">
+      <div className="bg-white border border-gray-200 p-4 rounded-md">
         <div className="flex gap-2 items-center mb-4">
           <Goal className="w-5 h-5 text-[#724AE0]" />
           <p className="text-sm tracking-tight text-gray-800">My Daily Focus</p>

@@ -2,6 +2,9 @@ import { Bell, LogOut } from "lucide-react";
 import { DailyFocus } from "./daily-focus";
 import { AssignedTasks } from "./assigned-tasks";
 import { UpcomingMeetings } from "./upcoming-meetings";
+import { AnnouncementsAndAlerts } from "./announcements";
+import { TeamPresence } from "./team-presence";
+import { RecentGitActivity } from "./recent-git-activty";
 
 export const Dashboard = () => {
   return (
@@ -26,12 +29,16 @@ export const Dashboard = () => {
           </div>
         </div>
         <div className="flex gap-4">
-          <div className="bg-red-50 w-[40%] flex flex-col gap-4">
+          <div className="w-[40%] flex flex-col gap-4">
             <DailyFocus />
             <AssignedTasks />
             <UpcomingMeetings />
           </div>
-          <div className="bg-green-300 w-[60%]">Right</div>
+          <div className="w-[60%] flex flex-col gap-4">
+            <AnnouncementsAndAlerts />
+            <TeamPresence />
+            <RecentGitActivity />
+          </div>
         </div>
       </div>
     </>

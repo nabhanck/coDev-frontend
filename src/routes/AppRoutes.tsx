@@ -1,6 +1,8 @@
 import { AppLayout } from "@/layouts/AppLayout";
 import { AuthLayout } from "@/layouts/AuthLayout";
 import { Dashboard } from "@/screens/dashboard";
+import { GitActivity } from "@/screens/git-activity";
+import { Sprints } from "@/screens/sprints";
 import { createBrowserRouter } from "react-router-dom";
 
 export const router = createBrowserRouter([
@@ -19,6 +21,14 @@ export const router = createBrowserRouter([
       {
         path: "/dashboard",
         element: <Dashboard />,
+      },
+      {
+        path: "/sprints",
+        element: <Sprints />,
+      },
+      {
+        path: "/git",
+        element: <GitActivity />,
       },
     ],
   },

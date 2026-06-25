@@ -35,7 +35,7 @@ const sampleNewTasks = [
 export const AssignedTasks = () => {
   return (
     <>
-      <div className="min-h-60 flex flex-col gap-5 p-4 border border-gray-200 rounded-md">
+      <div className="bg-white min-h-60 flex flex-col gap-5 p-4 border border-gray-200 rounded-md">
         <div className="flex items-center justify-between">
           <div className="flex items-center gap-2">
             <ClipboardCheck className="w-5 h-5 text-[#724AE0]" />

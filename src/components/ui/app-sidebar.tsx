@@ -1,13 +1,9 @@
 import {
   Building2,
-  ChevronDown,
   ChevronsUpDown,
-  FolderKanban,
   GitBranch,
   GitFork,
-  Home,
   MessageCircle,
-  Users,
   Video,
 } from "lucide-react";
 import {
@@ -27,20 +23,22 @@ import {
 } from "./dropdown-menu";
 import { Separator } from "./separator";
 import { NavLink } from "react-router-dom";
+import { HomeIcon, RocketLaunchIcon } from "@heroicons/react/16/solid";
+import coDevIcon from "../../assets/coDev.png";
 
 const items = [
   {
     title: "Dashboard",
     url: "/dashboard",
-    icon: Home,
+    icon: HomeIcon,
   },
   {
     title: "Sprints",
     url: "/sprints",
-    icon: FolderKanban,
+    icon: RocketLaunchIcon,
   },
   {
-    title: "Git",
+    title: "Git Activity",
     url: "/git",
     icon: GitBranch,
   },
@@ -61,9 +59,12 @@ export function AppSidebar() {
     <Sidebar className="border-gray-200 shadow-md">
       <SidebarContent>
         <SidebarGroup>
-          <div>
-            <h1 className="text-xl font-semibold">coDev</h1>
-            <p className="text-xs">Ship together. Anywhere</p>
+          <div className="flex gap-3">
+            <img src={coDevIcon} />
+            <div>
+              <h1 className="text-xl font-semibold">coDev</h1>
+              <p className="text-xs">Ship together. Anywhere</p>
+            </div>
           </div>
           <SidebarGroupContent>
             <SidebarMenu>
@@ -110,7 +111,7 @@ export function AppSidebar() {
                     </DropdownMenuItem>
                   </DropdownMenuContent>
                 </DropdownMenu>
-                <Separator className="w-full h-2 bg-gray-200 mt-5 mb-8" />
+                <Separator className="w-full h-2 bg-gray-200 my-5" />
               </SidebarMenuItem>
               {items.map((item) => (
                 <SidebarMenuItem key={item.title}>
@@ -118,16 +119,14 @@ export function AppSidebar() {
                     {({ isActive }) => (
                       <SidebarMenuButton
                         isActive={isActive}
-                        className={`py-7 ${
+                        className={`flex items-center py-7 text-base ${
                           isActive
-                            ? "text-[#724AE0] py-5 border-2 border-[#694CB8]/40 transition bg-linear-to-r from-[#F7F5FF] to-[#EDE7FF] rounded-md"
-                            : ""
+                            ? "font-normal! text-[#724AE0] py-5 border-2 border-[#694CB8]/40 transition bg-linear-to-r from-[#F7F5FF] to-[#EDE7FF] drop-shadow-lg rounded-md"
+                            : "text-gray-400 font-light"
                         }`}
                       >
-                        <item.icon className="w-5! h-5!" />
-                        <span className="text-base font-normal">
-                          {item.title}
-                        </span>
+                        <item.icon className="w-6! h-6!" />
+                        <span>{item.title}</span>
                       </SidebarMenuButton>
                     )}
                   </NavLink>
