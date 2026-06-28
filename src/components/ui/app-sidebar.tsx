@@ -56,7 +56,7 @@ const items = [
 
 export function AppSidebar() {
   return (
-    <Sidebar className="border-gray-200 shadow-md">
+    <Sidebar className="bg-white border-gray-200 shadow-md">
       <SidebarContent>
         <SidebarGroup>
           <div className="flex gap-3">
@@ -125,7 +125,7 @@ export function AppSidebar() {
                             : "text-gray-400 font-light"
                         }`}
                       >
-                        <item.icon className="w-6! h-6!" />
+                        <item.icon className="w-5! h-5!" />
                         <span>{item.title}</span>
                       </SidebarMenuButton>
                     )}
