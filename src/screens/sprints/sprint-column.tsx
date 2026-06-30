@@ -22,19 +22,7 @@ export const SprintColumn = ({ id, title, tasks, topBorderColor }: props) => {
     if (!columnRef.current) return;
 
     return dropTargetForElements({
-      element: columnRef.current,
-
-      //   onDragEnter() {
-      //     console.log("Entered", id);
-      //   },
-
-      //   onDragLeave() {
-      //     console.log("Left", id);
-      //   },
-
-      //   onDrop() {
-      //     console.log("Dropped on", id);
-      //   },
+      element: columnRef.current, 
 
       getData() {
         return {
@@ -47,7 +35,7 @@ export const SprintColumn = ({ id, title, tasks, topBorderColor }: props) => {
   return (
     <>
       <div
-        className="w-68 h-screen flex-col p-3 border border-t-2 border-gray-200 rounded-lg select-none"
+        className="w-68 flex-col p-3 border border-t-3 border-gray-200 rounded-lg select-none"
         style={{ borderTopColor: topBorderColor }}
       >
         <div className="flex items-center gap-2">
@@ -56,7 +44,7 @@ export const SprintColumn = ({ id, title, tasks, topBorderColor }: props) => {
             <p className="text-xs">22</p>
           </div>
         </div>
-        <div ref={columnRef} className="mt-3 h-full bg-red-200">
+        <div ref={columnRef} className="flex-col mt-3 h-[95%] bg-red-200">
           {tasks?.map((task, index) => {
             return <SprintTaskCard task={task} columnId={id} index={index} />;
           })}

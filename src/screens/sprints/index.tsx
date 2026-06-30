@@ -32,6 +32,32 @@ export const Sprints = () => {
           title: "Implement OAuth2 token refresh flow",
           ticketId: "AUTH-198",
         },
+        {
+          id: "3",
+          title: "Implement OAuth2 token refresh flow",
+          ticketId: "AUTH-198",
+        },
+        {
+          id: "4",
+          title: "Implement OAuth2 token refresh flow",
+          ticketId: "AUTH-198",
+        },
+        {
+          id: "5",
+          title: "Implement OAuth2 token refresh flow",
+          ticketId: "AUTH-198",
+        },
+        {
+          id: "6",
+          title: "Implement OAuth2 token refresh flow",
+          ticketId: "AUTH-198",
+        },
+        {
+          id: "7",
+          title: "Implement OAuth2 token refresh flow",
+          ticketId: "AUTH-198",
+        },
+
       ],
     },
     {
@@ -60,86 +86,81 @@ export const Sprints = () => {
   useEffect(() => {
     return monitorForElements({
       onDrop({ source, location }) {
-        console.log("source", source);
-        const destination = location.current.dropTargets[0];
-
         const taskTarget = location.current.dropTargets.find(
-          (target) => target.data.index !== undefined,
+          (target) => target.data.index !== undefined
         );
 
         const columnTarget = location.current.dropTargets.find(
-          (target) => target.data.columnId && target.data.index === undefined,
+          (target) =>
+            target.data.columnId !== undefined &&
+            target.data.index === undefined
         );
 
-        // if (!destination) return;
-        if (!taskTarget || !columnTarget) return;
-
         const taskId = source?.data?.taskId as string;
-        const sourceColumn = source?.data?.sourceColumn as keyof Columns;
-        // const destinationColumn = destination?.data?.columnId as keyof Columns;
-        const destinationColumn = columnTarget?.data?.columnId as keyof Columns;
+        const sourceColumn = source?.data?.sourceColumn as string;
 
-        // if (sourceColumn === destinationColumn) return;
+        // Destination column: prefer the task's column if dropped on a card,
+        // otherwise fall back to the column container itself.
+        const destinationColumn = (taskTarget?.data?.columnId ??
+          columnTarget?.data?.columnId) as string;
 
-        if (sourceColumn === destinationColumn) {
-          setColumns((prev) => {
-            const source = prev.find((c) => c.id === sourceColumn);
-            const destination = prev.find((c) => c.id === destinationColumn);
+        if (!destinationColumn) return;
 
-            if (!source || !destination) return prev;
-
-            const task = source.tasks.find((t) => t.id === taskId);
-
-            if (!task) return prev;
-
-            return prev.map((column) => {
-              if (column.id === sourceColumn) {
-                return {
-                  ...column,
-                  tasks: column.tasks.filter((t) => t.id !== taskId),
-                };
-              }
-
-              if (column.id === destinationColumn) {
-                return {
-                  ...column,
-                  tasks: [...column.tasks, task],
-                };
-              }
-
-              return column;
-            });
-          });
-        }
+        // Index to insert at. If dropped on a card, use its index.
+        // If dropped on empty column space, insert at the end.
+        let destinationIndex = taskTarget?.data?.index as number | undefined;
 
         setColumns((prev) => {
-          const source = prev.find((c) => c.id === sourceColumn);
-          const destination = prev.find((c) => c.id === destinationColumn);
+          const sourceCol = prev.find((c) => c.id === sourceColumn);
+          if (!sourceCol) return prev;
 
-          if (!source || !destination) return prev;
-
-          const task = source.tasks.find((t) => t.id === taskId);
-
+          const task = sourceCol.tasks.find((t) => t.id === taskId);
           if (!task) return prev;
 
+          // Build the new tasks list for the source column (task removed)
+          const sourceTasksWithoutMoved = sourceCol.tasks.filter(
+            (t) => t.id !== taskId
+          );
+
           return prev.map((column) => {
-            if (column.id === sourceColumn) {
-              return {
-                ...column,
-                tasks: column.tasks.filter((t) => t.id !== taskId),
-              };
+            // Case 1: moving within the same column
+            if (
+              column.id === sourceColumn &&
+              sourceColumn === destinationColumn
+            ) {
+              const reordered = [...sourceTasksWithoutMoved];
+              const insertAt =
+                destinationIndex !== undefined
+                  ? destinationIndex
+                  : reordered.length;
+
+              reordered.splice(insertAt, 0, task);
+
+              return { ...column, tasks: reordered };
             }
 
-            if (column.id === destinationColumn) {
-              return {
-                ...column,
-                tasks: [...column.tasks, task],
-                // tasks: [
-                //   ...column.tasks.slice(0, destinationIndex),
-                //   task,
-                //   ...column.tasks.slice(destinationIndex),
-                // ],
-              };
+            // Case 2: removing from source column (different column)
+            if (
+              column.id === sourceColumn &&
+              sourceColumn !== destinationColumn
+            ) {
+              return { ...column, tasks: sourceTasksWithoutMoved };
+            }
+
+            // Case 3: inserting into destination column (different column)
+            if (
+              column.id === destinationColumn &&
+              sourceColumn !== destinationColumn
+            ) {
+              const insertAt =
+                destinationIndex !== undefined
+                  ? destinationIndex
+                  : column.tasks.length;
+
+              const newTasks = [...column.tasks];
+              newTasks.splice(insertAt, 0, task);
+
+              return { ...column, tasks: newTasks };
             }
 
             return column;
@@ -152,7 +173,7 @@ export const Sprints = () => {
     <>
       <div className="p-4">
         <div>Sprints</div>
-        <div className="flex gap-10 w-full overflow-auto">
+        <div className="flex gap-10 w-full overflow-x-auto overflow-y-hidden">
           {columns.map((column) => (
             <SprintColumn
               key={column.id}

@@ -1,10 +1,11 @@
 import { Badge } from "@/components/ui/badge";
 import { Separator } from "@/components/ui/separator";
 import { GitBranch } from "lucide-react";
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import { draggable } from "@atlaskit/pragmatic-drag-and-drop/element/adapter";
 import { combine } from "@atlaskit/pragmatic-drag-and-drop/combine";
 import { dropTargetForElements } from "@atlaskit/pragmatic-drag-and-drop/element/adapter";
+import { SprintDetailsDialog } from "./sprint-details-dialog";
 
 type Task = {
   id: string;
@@ -21,29 +22,11 @@ type props = {
 export const SprintTaskCard = ({ task, columnId, index }: props) => {
   const cardRef = useRef<HTMLDivElement>(null);
 
-  //   useEffect(() => {
-  //     if (!cardRef.current) return;
+  const [openDialog, setOpenDialog] = useState(true);
 
-  //     draggable({
-  //       element: cardRef.current,
-
-  //       onDragStart() {
-  //         console.log("drag start");
-  //       },
-
-  //       onDrop() {
-  //         console.log("drag end");
-  //       },
-
-  //       getInitialData() {
-  //         return {
-  //           taskId: task.id,
-  //           sourceColumn: columnId,
-  //           sourceIndex: index,
-  //         };
-  //       },
-  //     });
-  //   }, [columnId, task.id]);
+  const handleOpenSprintDetailsDialog = () => {
+    setOpenDialog(true);
+  };
 
   useEffect(() => {
     if (!cardRef.current) return;
@@ -70,7 +53,7 @@ export const SprintTaskCard = ({ task, columnId, index }: props) => {
             index,
           };
         },
-      }),
+      })
     );
   }, [task, columnId, index]);
 
@@ -78,7 +61,8 @@ export const SprintTaskCard = ({ task, columnId, index }: props) => {
     <>
       <div
         ref={cardRef}
-        className="flex flex-col gap-2 border border-gray-200 p-3 rounded-lg cursor-pointer"
+        className="flex flex-col gap-2 border border-gray-200 mb-5 p-3 rounded-lg cursor-pointer"
+        onDoubleClick={handleOpenSprintDetailsDialog}
       >
         <div className="flex justify-between">
           <div className="w-[80%] flex-col gap-1">
@@ -103,6 +87,12 @@ export const SprintTaskCard = ({ task, columnId, index }: props) => {
           <p className="text-xs text-gray-500">feat/oauth-refresh</p>
         </div>
       </div>
+
+      <SprintDetailsDialog
+        openDialog={openDialog}
+        setOpenDialog={setOpenDialog}
+        taskDetails={task}
+      />
     </>
   );
 };
