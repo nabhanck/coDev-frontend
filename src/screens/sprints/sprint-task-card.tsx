@@ -22,7 +22,7 @@ type props = {
 export const SprintTaskCard = ({ task, columnId, index }: props) => {
   const cardRef = useRef<HTMLDivElement>(null);
 
-  const [openDialog, setOpenDialog] = useState(true);
+  const [openDialog, setOpenDialog] = useState(false);
 
   const handleOpenSprintDetailsDialog = () => {
     setOpenDialog(true);
@@ -62,7 +62,7 @@ export const SprintTaskCard = ({ task, columnId, index }: props) => {
       <div
         ref={cardRef}
         className="flex flex-col gap-2 border border-gray-200 mb-5 p-3 rounded-lg cursor-pointer"
-        onDoubleClick={handleOpenSprintDetailsDialog}
+        onClick={handleOpenSprintDetailsDialog}
       >
         <div className="flex justify-between">
           <div className="w-[80%] flex-col gap-1">
