@@ -61,7 +61,7 @@ export const SprintTaskCard = ({ task, columnId, index }: props) => {
     <>
       <div
         ref={cardRef}
-        className="flex flex-col gap-2 border border-gray-200 mb-5 p-3 rounded-lg cursor-pointer"
+        className="bg-white flex flex-col gap-2 border border-gray-200 mb-5 p-3 rounded-lg cursor-pointer"
         onClick={handleOpenSprintDetailsDialog}
       >
         <div className="flex justify-between">

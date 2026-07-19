@@ -1,6 +1,7 @@
 import { useEffect, useRef } from "react";
 import { SprintTaskCard } from "./sprint-task-card";
 import { dropTargetForElements } from "@atlaskit/pragmatic-drag-and-drop/element/adapter";
+import { Separator } from "@/components/ui/separator";
 
 type Task = {
   id: string;
@@ -22,7 +23,7 @@ export const SprintColumn = ({ id, title, tasks, topBorderColor }: props) => {
     if (!columnRef.current) return;
 
     return dropTargetForElements({
-      element: columnRef.current, 
+      element: columnRef.current,
 
       getData() {
         return {
@@ -35,7 +36,7 @@ export const SprintColumn = ({ id, title, tasks, topBorderColor }: props) => {
   return (
     <>
       <div
-        className="w-68 flex-col p-3 border border-t-3 border-gray-200 rounded-lg select-none"
+        className="bg-white w-68 flex-col p-3 border border-t-3 border-gray-200 rounded-lg select-none"
         style={{ borderTopColor: topBorderColor }}
       >
         <div className="flex items-center gap-2">
@@ -44,7 +45,8 @@ export const SprintColumn = ({ id, title, tasks, topBorderColor }: props) => {
             <p className="text-xs">22</p>
           </div>
         </div>
-        <div ref={columnRef} className="flex-col mt-3 h-[95%] bg-red-200">
+        <Separator className="w-full h-1 bg-gray-200 my-5" />
+        <div ref={columnRef} className="flex-col mt-3 h-[95%]">
           {tasks?.map((task, index) => {
             return <SprintTaskCard task={task} columnId={id} index={index} />;
           })}
